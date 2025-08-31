@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>JS Link Finder</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            width: 600px;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f0f0f0;
+            color: #000;
+            padding: 10px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-left img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: normal;
+            color: #555;
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            line-height: 1;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .menu-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            background: #fafafa;
+            border-bottom: 1px solid #ccc;
+        }
+
+        button,
+        select {
+            padding: 8px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: #fff;
+            transition: background 0.2s;
+            color: #000;
+        }
+
+        button:hover,
+        select:hover {
+            background: #f2f2f2;
+        }
+
+        #search {
+            flex-grow: 1;
+            padding: 7px 10px;
+            font-size: 14px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            color: #000;
+            background: #fff;
+        }
+
+        #status {
+            padding: 6px 12px;
+            font-size: 13px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #dcdde1;
+            color: #444;
+        }
+
+        #out {
+            flex-grow: 1;
+            overflow: auto;
+            padding: 0;
+            margin: 0;
+            background: #fff;
+            border-top: 1px solid #ccc;
+        }
+
+        .url-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            font-size: 14px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+            color: #000;
+            background: #fdfdfd;
+        }
+
+        .url-item:hover {
+            background: #eaeaea;
+        }
+
+        .url-icon {
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        .links-list {
+            display: none;
+            padding: 8px 20px;
+            font-size: 13px;
+            background: #fff;
+            color: #333;
+        }
+
+        .links-list div {
+            padding: 2px 0;
+            white-space: nowrap;
+            overflow-x: auto;
+            /* allow horizontal scroll */
+            overflow-y: hidden;
+            /* Hide scrollbar */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .links-list div::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Edge */
+        }
+
+        .dim {
+            opacity: .85;
+        }
+
+        mark {
+            background: #fff3a3;
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .active-match {
+            background: #ffb84d;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-left">
+            <img src="icons/icon-128.png" alt="Logo" />
+            <span>JavaScript Link Finder</span>
+        </div>
+        <div class="header-right">
+            <span id="version">v1.0.0</span>
+            <button class="menu-btn" title="Options">⋮</button>
+        </div>
+    </header>
+
+    <div class="toolbar">
+        <select id="patternMode">
+            <option value="normal">Normal</option>
+            <option value="redirect">Redirect</option>
+            <option value="xss">XSS</option>
+            <option value="sql">SQLi</option>
+            <option value="lfi">LFI</option>
+            <option value="rce">RCE</option>
+            <option value="idor">IDOR</option>
+            <option value="ssrf">SSRF</option>
+            <option value="ssti">SSTI</option>
+        </select>
+        <button id="scan">Scan</button>
+        <input type="text" id="search" placeholder="Search results..." />
+        <button id="prev">◀</button>
+        <button id="next">▶</button>
+        <button id="save">Export</button>
+    </div>
+
+    <div id="status" class="dim">Ready.</div>
+    <div id="out"></div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
